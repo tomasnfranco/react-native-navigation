@@ -1,7 +1,7 @@
 #import "RNNEventEmitter.h"
 #import "RNNUtils.h"
 #import "RNNTurboEventEmitter.h"
-#import <React-RuntimeApple/ReactCommon/RCTHost.h>
+#import <ReactCommon/RCTHost.h>
 
 @implementation RNNEventEmitter { }
 
@@ -122,12 +122,12 @@
   if (_host == nil) {
     return;
   }
-  
+
   RNNTurboEventEmitter *_eventEmitter = [[_host moduleRegistry] moduleForName:"RNNTurboEventEmitter"];
   if (_eventEmitter == nil) {
     return;
   }
-  
+
   [_eventEmitter send:eventName body:body];
 }
 

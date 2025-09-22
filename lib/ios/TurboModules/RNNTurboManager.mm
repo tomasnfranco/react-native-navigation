@@ -9,7 +9,7 @@
 #import "RNNReactComponentRegistry.h"
 #import "RNNReactRootViewCreator.h"
 #import "RNNTurboCommandsHandler.h"
-#import <React-RuntimeApple/ReactCommon/RCTHost.h>
+#import <ReactCommon/RCTHost.h>
 
 @interface RNNTurboManager ()
 
@@ -101,12 +101,12 @@
 - (void)onJavaScriptLoaded {
   RCTExecuteOnMainQueue(^{
     UIApplication.sharedApplication.delegate.window.rootViewController = nil;
-    
+
     [self->_commandsHandler setReadyToReceiveCommands:true];
     // TODO: Refactor
     //    [_modalHostViewHandler
     //        connectModalHostViewManager:[[_host moduleRegistry] moduleForName:"RCTModalHostViewManager"]];
-    
+
     [self->_eventEmitter sendOnAppLaunched];
   });
 }

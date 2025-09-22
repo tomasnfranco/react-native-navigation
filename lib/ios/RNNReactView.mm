@@ -3,7 +3,7 @@
 #import <React/RCTRootContentView.h>
 
 #ifdef RCT_NEW_ARCH_ENABLED
-#import <React-RuntimeApple/ReactCommon/RCTHost.h>
+#import <ReactCommon/RCTHost.h>
 #import <React/RCTFabricSurface.h>
 #import <React/RCTSurfacePresenter.h>
 
@@ -60,15 +60,15 @@
                 eventEmitter:(RNNEventEmitter *)eventEmitter
              sizeMeasureMode:(RCTSurfaceSizeMeasureMode)sizeMeasureMode
          reactViewReadyBlock:(RNNReactViewReadyCompletionBlock)reactViewReadyBlock {
-    
+
     RCTFabricSurface *surface = [host createSurfaceWithModuleName:moduleName
                                                 initialProperties:initialProperties];
     [host.surfacePresenter addObserver:self];
     self = [super initWithSurface:surface sizeMeasureMode:sizeMeasureMode];
-    
+
     _reactViewReadyBlock = reactViewReadyBlock;
     _eventEmitter = eventEmitter;
-    
+
     return self;
 }
 #endif
@@ -90,7 +90,7 @@
     }
 }
 #endif
-    
+
 - (void)reactViewReady {
     if (_reactViewReadyBlock) {
         _reactViewReadyBlock();
@@ -107,9 +107,9 @@
         _pendingWillAppear = YES;
         return;
     }
-    
+
     _pendingWillAppear = NO;
-    
+
     if (!_willAppear) {
         [_eventEmitter sendComponentWillAppear:self.componentId
                                  componentName:self.moduleName
@@ -123,9 +123,9 @@
         _pendingDidAppear = YES;
         return;
     }
-    
+
     _pendingDidAppear = NO;
-    
+
     if (!_didAppear) {
         [_eventEmitter sendComponentDidAppear:self.componentId
                                 componentName:self.moduleName
@@ -141,7 +141,7 @@
     _willAppear = NO;
     _didAppear = NO;
 }
-    
+
 - (NSString *)componentId {
     return self.appProperties[@"componentId"];
 }
@@ -152,15 +152,15 @@
                                  userInfo:nil];
 }
 #pragma mark -
-    
-    
+
+
 #ifdef RCT_NEW_ARCH_ENABLED
-    
+
 #pragma mark - RCTSurfacePresenterObserver
 - (void)willMountComponentsWithRootTag:(NSInteger)rootTag {
     if (self.surface.rootTag == rootTag) {
         _isMounted = YES;
-        
+
         if (_pendingWillAppear) {
             [self componentWillAppear];
         }
@@ -170,14 +170,14 @@
 - (void)didMountComponentsWithRootTag:(NSInteger)rootTag {
     if (self.surface.rootTag == rootTag) {
         _isMounted = YES;
-        
+
         if (_pendingDidAppear) {
             [self componentDidAppear];
         }
     }
 }
 #pragma mark -
-            
+
 - (NSDictionary *)appProperties {
     @synchronized(self) {
         return self.surface.properties;
@@ -220,7 +220,7 @@
 - (void)setSizeFlexibility:(RCTRootViewSizeFlexibility)sizeFlexibility {
     super.sizeMeasureMode = convertToSurfaceSizeMeasureMode(sizeFlexibility);
 }
-            
+
 #endif
-            
+
 @end
